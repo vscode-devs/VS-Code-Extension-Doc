@@ -1,0 +1,3 @@
+[submodule "src/doc"]
+	path = src/doc
+	url = git@github.com:vscode-devs/docs-extension.git
