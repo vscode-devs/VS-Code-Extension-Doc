@@ -4,16 +4,16 @@ import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
 export default hopeTheme({
-  hostname: "https://vuepress-theme-hope-docs-demo.netlify.app",
+  hostname: "https://vscode-devs.github.io/VS-Code-Extension-Doc/",
 
   author: {
-    name: "Mr.Hope",
-    url: "https://mister-hope.com",
+    name: "苏木",
+    url: "https://vscode-devs.github.io/VS-Code-Extension-Doc/",
   },
 
   logo: "https://theme-hope-assets.vuejs.press/logo.svg",
 
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  repo: "vscode-devs/VS-Code-Extension-Doc",
 
   docsDir: "src",
 
@@ -24,7 +24,7 @@ export default hopeTheme({
   sidebar,
 
   // 页脚
-  footer: "默认页脚",
+  footer: "苏木的 VS Code 扩展学习文档",
   displayFooter: true,
 
   // 加密配置

@@ -24,8 +24,11 @@ export default navbar([
     ],
   },
   {
-    text: "V2 文档",
+    text: "VS Code参考文档",
     icon: "book",
-    link: "https://theme-hope.vuejs.press/zh/",
+    children: [
+		{ text: "VS Code官方文档", link: "https://vscode.js.cn/api" },
+		{ text: "VS Code插件开发文档-中文版", link: "https://liiked.github.io/VS-Code-Extension-Doc-ZH/#/" }
+	]
   },
 ]);
