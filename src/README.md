@@ -1,5 +1,5 @@
 ---
-home: true
+home: false
 icon: house
 title: 项目主页
 heroImage: https://theme-hope-assets.vuejs.press/logo.svg

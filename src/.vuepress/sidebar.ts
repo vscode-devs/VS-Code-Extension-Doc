@@ -3,20 +3,28 @@ import { sidebar } from "vuepress-theme-hope";
 export default sidebar({
   "/": [
     "",
-    "portfolio",
-    {
-      text: "案例",
+    // "portfolio",
+    // {
+    //   text: "案例",
+    //   icon: "laptop-code",
+    //   prefix: "demo/",
+    //   link: "demo/",
+    //   children: "structure",
+    // },
+	{
+      text: "开发文档",
       icon: "laptop-code",
-      prefix: "demo/",
-      link: "demo/",
+      prefix: "doc/",
+      link: "doc/",
       children: "structure",
     },
-    {
-      text: "文档",
-      icon: "book",
-      prefix: "guide/",
-      children: "structure",
-    },
+    // {
+    //   text: "文档",
+    //   icon: "book",
+    //   prefix: "guide/",
+	//   link: "guide/",
+    //   children: "structure",
+    // },
     {
       text: "幻灯片",
       icon: "person-chalkboard",
