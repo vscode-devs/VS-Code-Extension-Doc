@@ -2,7 +2,7 @@
 
 ## <font size=3>1. 开发环境</font>
 
-[![node](https://badgen.net/static/node/v22.16.0/F96854)](https://badgen.net/static/node/v22.16.0/F96854)&nbsp;&nbsp;&nbsp;&nbsp;[![npm](https://badgen.net/static/npm/10.9.2/F96854)](https://badgen.net/static/npm/10.9.2/F96854)&nbsp;&nbsp;&nbsp;&nbsp;[![vuepress](https://badgen.net/static/vuepress/2.0.0-rc.23/cyan)](https://badgen.net/static/vuepress/2.0.0-rc.23/cyan)&nbsp;&nbsp;&nbsp;&nbsp;[![vuepress-theme-hope](https://badgen.net/static/vuepress-theme-hope/2.0.0-rc.89/cyan)](https://badgen.net/static/vuepress-theme-hope/2.0.0-rc.89/cyan)
+[![node](https://badgen.net/static/node/v22.16.0/F96854)](https://badgen.net/static/node/v22.16.0/F96854)&nbsp;&nbsp;&nbsp;&nbsp;[![npm](https://badgen.net/static/npm/10.9.2/F96854)](https://badgen.net/static/npm/10.9.2/F96854)&nbsp;&nbsp;&nbsp;&nbsp;[![vuepress](https://badgen.net/static/vuepress/2.0.0-rc.23/cyan)](https://badgen.net/static/vuepress/2.0.0-rc.23/cyan)&nbsp;&nbsp;&nbsp;&nbsp;[![vuepress-theme-hope](https://badgen.net/static/vuepress-theme-hope/2.0.0-rc.88/cyan)](https://badgen.net/static/vuepress-theme-hope/2.0.0-rc.88/cyan)
 
 ## <font size=3>2. 建立站点</font>
 
