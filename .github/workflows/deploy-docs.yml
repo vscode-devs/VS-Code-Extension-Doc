@@ -2,7 +2,7 @@
 name: 部署文档
 
 on:
-  push:
+  push:                # 推送触发
     branches:
       - master
   repository_dispatch: # 事件触发
@@ -18,17 +18,16 @@ jobs:
     # repository_dispatch时，只有 event-type 为 trigger_site_deployment 时触发
     if: |
       github.event_name == 'repository_dispatch' && github.event.action == 'trigger_deployment_vscode_site' ||
-      (github.event_name == 'push' && 
-        (contains(github.event.head_commit.message, '[deploy]') || contains(github.event.head_commit.message, '[update]')))
+      (github.event_name == 'push' && (
+        contains(github.event.head_commit.message, '[deploy]') || contains(github.event.head_commit.message, '[update]')
+        )
+      )
     steps:
       - name: 打印相关路径
         run: | # | 为 yaml 的特定符号，其下可以使用多行文字。
           echo "当前路径为 $(pwd)"
-          ls -alh
-          echo "github.workspace路径为 ${{ github.workspace }}"
-          ls ${{ github.workspace }} -alh
+          echo "工作路径为 ${{ github.workspace }}"
           echo "HOME路径为 $HOME"
-          ls $HOME -alh
       
       # 打印触发信息
       - name: Log trigger source
@@ -36,12 +35,13 @@ jobs:
           echo "Triggered by: ${{ github.event_name }}"
           if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
             echo "This deployment was triggered by docs repository"
-            echo "Dispatch SHA: ${{ github.event.client_payload.sha }}"
+            echo "Dispatch SHA       : ${{ github.event.client_payload.sha }}"
             echo "Dispatch Repository: ${{ github.event.client_payload.repository }}"
-            echo "Triggered at: ${{ github.event.client_payload.timestamp }}"
+            echo "Triggered at       : ${{ github.event.client_payload.timestamp }}"
           else
-            echo "Push SHA: ${{ github.sha }}"
+            echo "Repo Own Push SHA  : ${{ github.sha }}"
           fi
+          
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -52,6 +52,33 @@ jobs:
       - name: 更新子模块到远程最新版本
         run: |
           git submodule update --remote
+
+      - name: 获取相关提交信息
+        id: get_commit_info
+        run: |
+          cd ${{ github.workspace }}/src/doc # 切换到文档目录
+          echo "当前路径为 $(pwd)"
+          echo "SUB_REPO_NAME=$(git config --get remote.origin.url | sed -E 's/(git@|https:\/\/)github.com(:|\/)([^\/]+)\/([^\.]+)(\.git)?/\3\/\4/')" >> $GITHUB_OUTPUT
+          echo "SUB_COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo "SUB_SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "SUB_COMMIT_MESSAGE=$(git log -1 --pretty=%B | head -n1)" >> $GITHUB_OUTPUT
+          
+          cd ${{ github.workspace }} # 切换回工作目录
+          echo "当前路径为 $(pwd)"
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c 1-7)
+          echo "OWN_SHORT_SHA=$SHORT_SHA" >> $GITHUB_OUTPUT
+          echo "OWN_COMMIT_MESSAGE=$(git log -1 --pretty=%B | head -n1)" >> $GITHUB_OUTPUT
+      
+      - name: 打印提交信息
+        run: |
+          echo "Submodule Repository: ${{ steps.get_commit_info.outputs.SUB_REPO_NAME }}"
+          echo "Submodule Commit ID : ${{ steps.get_commit_info.outputs.SUB_COMMIT_ID }}"
+          echo "Submodule Short SHA : ${{ steps.get_commit_info.outputs.SUB_SHORT_SHA }}"
+          echo "Submodule Commit Message: ${{ steps.get_commit_info.outputs.SUB_COMMIT_MESSAGE }}"
+          echo "own Repository: ${{ github.repository }}"
+          echo "own Commit ID : ${{ github.sha }}"
+          echo "Own Short SHA : ${{ steps.get_commit_info.outputs.OWN_SHORT_SHA }}"
+          echo "own Commit Message: ${{ steps.get_commit_info.outputs.OWN_COMMIT_MESSAGE }}"
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
@@ -75,5 +102,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           # 部署文档
+          single-commit: true
           branch: gh-pages
           folder: src/.vuepress/dist
+          commit-message: "Deploy by ${{ github.repository }}@${{ steps.get_commit_info.outputs.OWN_SHORT_SHA }} && ${{ steps.get_commit_info.outputs.SUB_REPO_NAME }}@${{ steps.get_commit_info.outputs.SUB_SHORT_SHA }} 🚀"
